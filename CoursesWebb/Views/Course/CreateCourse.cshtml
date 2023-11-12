@@ -1,0 +1,93 @@
+﻿@using Domain
+
+@{
+    var courseTypes = Enum.GetValues(typeof(SystemClass.CourseType));
+}
+
+<div class="container">
+    <h1 class="d-flex flex-column align-items-center text-center">Create course</h1>
+
+    <form method="post" asp-controller="Course" asp-action="CreateCourse">
+        <div class="mb-3">
+            <label for="Ctitle" class="form-label">Title:</label>
+            <input type="text" class="form-control" id="Ctitle" placeholder="Title" name="title">
+        </div>
+        <div class="mb-3">
+            <label for="Cdescription" class="form-label">Description:</label>
+            <input type="text" class="form-control" id="Cdescription" placeholder="Description" name="description">
+        </div>
+        <div class="mb-3">
+            <label for="Cstudents" class="form-label">Max students:</label>
+            <input type="text" class="form-control" id="Cstudents" placeholder="Maxstudents" name="maxStudents">
+        </div>
+        <div class="mb-3">
+            <label for="Cdate" class="form-label">Date</label>
+            <input type="date" class="form-control" id="Cdate" placeholder="Date" name="startDate">
+        </div>
+
+        <div class="mb-3">
+            <label for="Ctype" class="form-label">Course type:</label>
+            <select class="form-select" id="Ctype" name="Ctype" onchange="showAdditionalFields()">
+                @foreach (var type in courseTypes)
+                {
+                    <option value="@type">@type</option>
+                }
+            </select>
+        </div>
+
+        <div id="RegularCourseFields" style="display: none;">
+            <div class="mb-3">
+                <label for="Location" class="form-label">Location:</label>
+                <input type="text" class="form-control" id="Location" name="location">
+            </div>
+            <div class="mb-3">
+                <label for="MeetingDays" class="form-label">Meeting Days:</label>
+                <input type="text" class="form-control" id="MeetingDays" name="meetingDays">
+            </div>
+        </div>
+
+        <div id="OnlineCourseFields" style="display: none;">
+            <div class="mb-3">
+                <label for="DurationHours" class="form-label">Duration (hours):</label>
+                <input type="text" class="form-control" id="DurationHours" name="durationHours">
+            </div>
+            <div class="mb-3">
+                <label for="Platform" class="form-label">Online Platform:</label>
+                <select class="form-select" id="Platform" name="platform">
+                    @foreach (var platform in Enum.GetValues(typeof(OnlineCourse.onlinePlatform)))
+                    {
+                        <option value="@platform">@platform</option>
+                    }
+                </select>
+            </div>
+            </div>
+            <input type="hidden" id="courseType" name="courseType">
+
+        <button type="submit">Submit</button>
+    </form>
+
+
+</div>
+
+<script>
+    function showAdditionalFields() {
+        var selectedValue = document.getElementById('Ctype').value;
+        document.getElementById('courseType').value = selectedValue;
+
+        document.getElementById('OnlineCourseFields').style.display = 'none';
+        document.getElementById('RegularCourseFields').style.display = 'none';
+
+        switch (selectedValue) {
+            case "Online":
+                document.getElementById('OnlineCourseFields').style.display = 'block';
+                break;
+
+            case "Regular":
+                document.getElementById('RegularCourseFields').style.display = 'block';
+                break;
+
+            default:
+                break;
+        }
+    }
+</script>
