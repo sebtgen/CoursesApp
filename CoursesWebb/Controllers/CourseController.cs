@@ -9,7 +9,7 @@ namespace CoursesWebb.Controllers
 
         public IActionResult CreateCourse ()
         {
-return View();
+        return View();
         }        
 
         [HttpPost]

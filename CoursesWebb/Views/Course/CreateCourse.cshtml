@@ -28,6 +28,8 @@
         <div class="mb-3">
             <label for="Ctype" class="form-label">Course type:</label>
             <select class="form-select" id="Ctype" name="Ctype" onchange="showAdditionalFields()">
+                <option>Select</option>
+
                 @foreach (var type in courseTypes)
                 {
                     <option value="@type">@type</option>

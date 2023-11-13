@@ -20,6 +20,7 @@ namespace Domain
         public int UserID { get => userID; set => userID = value; }
         public string PhoneNumber { get => phoneNumber; set => phoneNumber = value; }
 
+        public User() { }
         public User(string password, string email, string phoneNumber)
         {
             this.password = password;

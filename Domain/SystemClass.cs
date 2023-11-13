@@ -55,11 +55,11 @@ namespace Domain
                 courses[5]
             };
 
-            AddUser(new Student("PassTest1", "test1@gmail.com", "1234567890", "Tito 1", DateTime.Now/*, courseList1*/, true));
-            AddUser(new Student("PassTest2", "test2@gmail.com", "1234567890", "Tito 2", DateTime.Now/*, courseList2*/, false));
-            AddUser(new Student("PassTest3", "test3@gmail.com", "1234567890", "Tito 3", DateTime.Now/*, courseList3*/, true));
+            AddUser(new Student("test1@gmail.com", "PassTest1", "1234567890", "Tito 1", DateTime.Now/*, courseList1*/, true));
+            AddUser(new Student("test2@gmail.com", "PassTest2", "1234567890", "Tito 2", DateTime.Now/*, courseList2*/, false));
+            AddUser(new Student("test3@gmail.com", "PassTest3", "1234567890", "Tito 3", DateTime.Now/*, courseList3*/, true));
 
-            AddUser(new Instructor("PassTest1", "test4@gmail.com", "1234567890", "Tito 1", DateTime.Now/*, courseList1*/, courseList1));
+            AddUser(new Instructor("test4@gmail.com", "PassTest1", "1234567890", "Tito 1", DateTime.Now/*, courseList1*/, courseList1));
 
 
             AddEnrollment((Student)users[0], courses[0], new Enrollment(courses[0], (Student)users[0]));

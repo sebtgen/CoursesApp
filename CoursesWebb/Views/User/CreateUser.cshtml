@@ -1,0 +1,85 @@
+﻿@using Domain;
+
+<div class="container">
+    <h1 class="d-flex flex-column align-items-center text-center">Create user</h1>
+
+    <form method="post" asp-controller="User" asp-action="CreateUser">
+        <div class="mb-3">
+            <label for="Uemail" class="form-label">Email:</label>
+            <input type="text" class="form-control" id="Uemail" placeholder="Email" name="email">
+        </div>
+        <div class="mb-3">
+            <label for="Upassword" class="form-label">Password:</label>
+            <input type="text" class="form-control" id="Upassword" placeholder="Password" name="password">
+        </div>
+        <div class="mb-3">
+            <label for="Uphone" class="form-label">Phone number:</label>
+            <input type="text" class="form-control" id="Uphone" placeholder="Phone number" name="phoneNumber">
+        </div>
+        <div class="mb-3">
+            <label for="Utype" class="form-label">User type:</label>
+            <select class="form-select" id="Utype" name="Utype" onchange="showAdditionalFields()">
+                <option>Select</option>
+                <option value="Student">Student</option>
+                <option value="Instructor">Instructor</option>
+            </select>
+        </div>
+        <div id="StudentFields" style="display: none;">
+            <div class="mb-3">
+                <label for="UStudentName" class="form-label">Student name:</label>
+                <input type="text" class="form-control" id="UStudentName" name="studentName">
+            </div>
+            <div class="mb-3">
+                <label for="Udate" class="form-label">Date birth:</label>
+                <input type="text" class="form-control" id="Udate" name="dateBirth">
+            </div>
+            <div class="mb-3">
+                <label for="Uremote" class="form-label">Remote only:</label>
+                <input type="text" class="form-control" id="Uremote" name="remoteOnly">
+            </div>
+        </div>
+
+        <div id="InstructorFields" style="display: none;">
+            <div class="mb-3">
+                <label for="UinstructorName" class="form-label">Instructor name:</label>
+                <input type="text" class="form-control" id="UinstructorName" name="instructorName">
+            </div>
+            <div class="mb-3">
+                <label for="UstartDate" class="form-label">Start date:</label>
+                <input type="text" class="form-control" id="UstartDate" name="startDate">
+            </div>
+            <div class="mb-3">
+                <label for="Ucourses" class="form-label">Courses teach:</label>
+                <input type="text" class="form-control" id="Ucourses" name="coursesTeach">
+            </div>
+        </div>
+        <input type="hidden" id="userType" name="userType">
+
+        <button type="submit">Submit</button>
+
+    </form>
+
+</div>
+
+<script>
+    function showAdditionalFields() {
+        var selectedValue = document.getElementById('Utype').value;
+        document.getElementById('userType').value = selectedValue;
+
+        document.getElementById('StudentFields').style.display = 'none';
+        document.getElementById('InstructorFields').style.display = 'none';
+
+        switch (selectedValue) {
+            case "Student":
+                document.getElementById('StudentFields').style.display = 'block';
+                break;
+
+            case "Instructor":
+                document.getElementById('InstructorFields').style.display = 'block';
+                break;
+
+            default:
+                break;
+        }
+    }
+</script>

@@ -15,7 +15,8 @@ namespace Domain
         public DateTime StartDate { get => startDate; set => startDate = value; }
         public List<Course> CoursesTeach { get => coursesTeach; set => coursesTeach = value; }
 
-        public Instructor(string password, string email, string phoneNumber, string instructorName, DateTime startDate, List<Course> coursesTeach)
+        public Instructor() { }
+        public Instructor(string email, string password, string phoneNumber, string instructorName, DateTime startDate, List<Course> coursesTeach)
             : base(password, email, phoneNumber)
         {
             this.instructorName = instructorName;

@@ -13,7 +13,8 @@ namespace Domain
         //List<Course> coursesEnroll;
         bool remoteOnly;
 
-        public Student(string password, string email, string phoneNumber, string studentName, DateTime dateBirth, /*List<Course> courses,*/ bool remoteOnly) : base(password, email, phoneNumber)
+        public Student() { }
+        public Student(string email, string password, string phoneNumber, string studentName, DateTime dateBirth, /*List<Course> courses,*/ bool remoteOnly) : base(password, email, phoneNumber)
         {
             this.studentName = studentName;
             this.dateBirth = dateBirth;
