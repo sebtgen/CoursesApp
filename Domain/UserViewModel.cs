@@ -20,6 +20,8 @@ namespace Domain
         public DateTime StartDate { get; set; }
         public List<Course> CoursesTeach { get; set; }
 
+        public List<int> SelectedCourses { get; set; }
+
         public string UserType { get; set; }
 
 

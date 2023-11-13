@@ -211,6 +211,12 @@ namespace Domain
             return aux;
         }
 
+        public List<User> ListUsers ()
+        {
+            List<User> aux = users;
+            return aux;
+        }
+
         public List<Course> ReturnCoursesStudent(string email)
         {
             List<Course> aux = new List<Course>();

@@ -9,21 +9,26 @@ namespace CoursesWebb.Controllers
 
         public IActionResult CreateUser()
         {
-            return View();
+            List<User> users = unS.ListUsers();
+            ViewBag.users = users;
+            return View(users);
         }
 
         [HttpPost]
-        public IActionResult CreateUser (UserViewModel model)
+        public IActionResult CreateUser(UserViewModel model)
         {
             try
             {
                 User user = UserFactory.CreateUser(model);
                 unS.AddUser(user);
-                return View();
+                List<User> users = unS.ListUsers();
+                ViewBag.users = users;
+                return View(users);
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 ViewBag.Mensaje = $"Test";
-            return View();
+                return RedirectToAction("CreateUser");
             }
         }
     }

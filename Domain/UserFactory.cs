@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,6 +27,8 @@ namespace Domain
                     };
                     break;
                 case "Instructor":
+                   
+
                     user = new Instructor
                     {
                         Email = model.Email,
@@ -33,8 +36,19 @@ namespace Domain
                         PhoneNumber = model.PhoneNumber,
                         InstructorName = model.InstructorName,
                         StartDate = model.StartDate,
-                        CoursesTeach = model.CoursesTeach
+                        CoursesTeach = new List<Course>()
                     };
+
+                    Instructor instructor = (Instructor)user;
+                    SystemClass unS = SystemClass.Instance;
+                    foreach (var courseID in model.SelectedCourses)
+                    {
+                        Course course = unS.FindCourseID(courseID);
+                        if (course != null)
+                        {
+                            instructor.CoursesTeach.Add(course);
+                        }
+                    }
                     break;
                 default:
                     throw new ArgumentException("Invalid");

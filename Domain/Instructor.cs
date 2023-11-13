@@ -24,6 +24,7 @@ namespace Domain
             this.coursesTeach = coursesTeach;
         }
 
+
         public void ValidateInstructor()
         {
             base.ValidateUser();

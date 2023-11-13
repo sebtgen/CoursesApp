@@ -1,6 +1,6 @@
 ﻿@using Domain;
 @model List<Course>
-@*Pagina de inicio que puede mostrar errores y un boton para hacer logout*@
+@**@
 @* @if (ViewBag.Error != null)
 {
     <div class="alert alert-danger text-center">
@@ -16,23 +16,23 @@
 <hr />
 
 @{
-    bool hayRegular = false;
-    bool hayOnline = false;
+    bool foundRegular = false;
+    bool foundOnline = false;
 }
 
 @foreach (Course c in Model)
 {
     if (c.GetType() == typeof(RegularCourse))
     {
-        hayRegular = true;
+        foundRegular = true;
     }
     else if (c.GetType() == typeof(OnlineCourse))
     {
-        hayOnline = true;
+        foundOnline = true;
     }
 }
 
- @{if (hayRegular)
+ @{if (foundRegular)
         {
 <h4 class="text-center">Regular courses</h4>
 <table class="table table-striped table-bordered table-sm">
@@ -68,8 +68,7 @@
 </table>
         }}
 
-@{
-    if (hayOnline)
+@{if (foundOnline)
     {
         <h4 class="text-center">Online courses</h4>
         <table class="table table-striped table-bordered table-sm">
@@ -103,5 +102,4 @@
                 }
             </tbody>
         </table>
-    }
-}
+    }}

@@ -1,4 +1,106 @@
 ﻿@using Domain;
+@{
+    var systemClass = SystemClass.Instance;
+    var allCourses = systemClass.ListCourses();
+}
+@model List<User>;
+
+@{
+    bool foundStudent = false;
+    bool foundInstructor = false;
+}
+
+@foreach (User u in Model)
+{
+    if (u.GetType() == typeof(Student))
+    {
+        foundStudent = true;
+    }
+    else if (u.GetType() == typeof(Instructor))
+    {
+        foundInstructor = true;
+    }
+}
+
+@{
+    if (foundStudent)
+    {
+        <h4 class="text-center">Student users</h4>
+        <table class="table table-striped table-bordered table-sm">
+            <thead class="bg-dark text-white">
+                <tr>
+                    <th scope="col">Email</th>
+                    <th scope="col">Password</th>
+                    <th>Phone number</th>
+                    <th>Student name</th>
+                    <th>Date birth</th>
+                    <th>Remote only</th>
+                </tr>
+            </thead>
+
+            <tbody class="table-striped">
+                @foreach (User u in Model)
+                {
+                    <tr>
+                        @if (u.GetType() == typeof(Student))
+                        {
+                            <td>@u.Email</td>
+                            <td>@u.Password</td>
+                            <td>@u.PhoneNumber</td>
+
+                            Student s = u as Student;
+                            <td>@s.StudentName</td>
+                            <td>@s.DateBirth</td>
+                            <td>@s.RemoteOnly</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    }
+} 
+
+@{
+    if (foundInstructor)
+    {
+        <h4 class="text-center">Student users</h4>
+        <table class="table table-striped table-bordered table-sm">
+            <thead class="bg-dark text-white">
+                <tr>
+                    <th scope="col">Email</th>
+                    <th scope="col">Password</th>
+                    <th>Phone number</th>
+                    <th>Instructor name</th>
+                    <th>Start date</th>
+                    <th>Courses teach</th>
+                </tr>
+            </thead>
+
+            <tbody class="table-striped">
+                @foreach (User u in Model)
+                {
+                    <tr>
+                        @if (u.GetType() == typeof(Instructor))
+                        {
+                            <td>@u.Email</td>
+                            <td>@u.Password</td>
+                            <td>@u.PhoneNumber</td>
+
+                            Instructor i = u as Instructor;
+                            string list = i.FindCID();
+                            <td>@i.InstructorName</td>
+                            <td>@i.StartDate</td>
+                            <td>@list
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    }
+}
 
 <div class="container">
     <h1 class="d-flex flex-column align-items-center text-center">Create user</h1>
@@ -31,7 +133,7 @@
             </div>
             <div class="mb-3">
                 <label for="Udate" class="form-label">Date birth:</label>
-                <input type="text" class="form-control" id="Udate" name="dateBirth">
+                <input type="date" class="form-control" id="Udate" name="dateBirth">
             </div>
             <div class="mb-3">
                 <label for="Uremote" class="form-label">Remote only:</label>
@@ -46,12 +148,18 @@
             </div>
             <div class="mb-3">
                 <label for="UstartDate" class="form-label">Start date:</label>
-                <input type="text" class="form-control" id="UstartDate" name="startDate">
+                <input type="date" class="form-control" id="UstartDate" name="startDate">
             </div>
             <div class="mb-3">
                 <label for="Ucourses" class="form-label">Courses teach:</label>
                 <input type="text" class="form-control" id="Ucourses" name="coursesTeach">
             </div>
+
+            @foreach (var course in allCourses)
+            {
+                <input type="checkbox" name="selectedCourses" value="@course.CourseID" /> @course.Title
+                <br />
+            }
         </div>
         <input type="hidden" id="userType" name="userType">
 
