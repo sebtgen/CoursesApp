@@ -29,5 +29,17 @@ namespace CoursesWebb.Controllers
 
             }
         }
+
+        public IActionResult ListCourses ()
+        {
+            List<Course> courses = unS.ListCourses();
+            ViewBag.courses = courses;
+            return View(courses);
+        }
+
+
+
+
+
     }
 }

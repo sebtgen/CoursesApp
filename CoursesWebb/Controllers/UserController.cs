@@ -9,9 +9,7 @@ namespace CoursesWebb.Controllers
 
         public IActionResult CreateUser()
         {
-            List<User> users = unS.ListUsers();
-            ViewBag.users = users;
-            return View(users);
+            return View();
         }
 
         [HttpPost]
@@ -31,5 +29,34 @@ namespace CoursesWebb.Controllers
                 return RedirectToAction("CreateUser");
             }
         }
+
+        public IActionResult ListUsers ()
+        {
+            List<User> users = unS.ListUsers();
+            ViewBag.users = users;
+            return View(users);
+        }
+
+        public IActionResult EnrollStudent()
+        {
+            List<User> users = unS.ListUsers();
+            ViewBag.users = users;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult EnrollStudent(int userID, int courseID)
+        {
+            Student student = unS.FindUserByID(userID) as Student;
+            Course course = unS.FindCourseID(courseID);
+
+            if (student != null && course != null)
+            {
+                Enrollment enrollment = new Enrollment(course, student);
+                unS.AddEnrollment(student, course, enrollment);
+            }
+            return View();
+        }
+
     }
 }

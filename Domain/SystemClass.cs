@@ -150,8 +150,6 @@ namespace Domain
             {
                 enrollments.Add(enrollment);
                 course.AddStudent();
-                Console.Clear();
-                enrollment.ToString();
             }
             catch (Exception ex)
             {
@@ -175,6 +173,18 @@ namespace Domain
                         return u;
 
                     }
+                }
+            }
+            return null;
+        }
+
+        public User FindUserByID (int id)
+        {
+            foreach (User u in users)
+            {
+                if (u.UserID == id && u.GetType() == typeof(Student))
+                {
+                    return u;
                 }
             }
             return null;

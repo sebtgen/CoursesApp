@@ -1,0 +1,40 @@
+﻿@using Domain;
+@{
+    var systemClass = SystemClass.Instance;
+    var allCourses = systemClass.ListCourses();
+
+}
+
+<div class="container">
+    <h1 class="d-flex flex-column align-items-center text-center">Enroll student</h1>
+
+    @if (ViewBag.users != null)
+    {
+        <form method="post" asp-controller="User" asp-action="EnrollStudent">
+            <select class="form-select" id="user" name="userID">
+                <option>Select</option>
+                @foreach (User u in ViewBag.users)
+                {
+                    if (u.GetType() == typeof(Student))
+                    {
+                        Student s = u as Student;
+                        <option value="@s.UserID">@s.StudentName</option>
+
+                    }
+
+                }
+            </select>
+            <br>
+            <select class="form-select" id="course" name="courseID">
+                @foreach (var course in allCourses)
+                {
+                    <option value="@course.CourseID" /> @course.Title
+                    
+                }
+            </select>
+            
+            <button type="submit">Enroll</button>
+        </form>
+
+    }
+</div>
