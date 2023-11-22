@@ -1,0 +1,12 @@
+﻿@using Domain;
+@{
+    var systemClass = SystemClass.Instance;
+    var allCourses = systemClass.ListCourses();
+}
+
+<h1>Enroll course to portfolio</h1>
+@foreach (var course in allCourses)
+{
+    <input type="checkbox" name="selectedCourses" value="@course.CourseID"/>@course.Title
+    <br />
+}

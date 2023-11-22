@@ -241,6 +241,53 @@ namespace Domain
             return aux;
         }
 
+        public List<Course> ReturnCoursesInstructor(string email)
+        {
+            List<Course> aux = new List<Course>();
+
+           foreach (User u in users)
+            {
+                if (u.GetType() == typeof(Instructor) && u.Email == email)
+                {
+                    Instructor i = u as Instructor;
+                    aux = i.CoursesTeach;
+                }
+            }
+           if (aux.Count > 0)
+            {
+                return aux;
+            }
+           else
+            {
+                return null;
+            }
+        }
+
+        public List<User> CheckStudentsEnrolledCourse (int id)
+        {
+            List<User> aux = new List<User>();
+
+            foreach (Enrollment e in enrollments)
+            {
+                if (e.EnrolledCourse.CourseID == id)
+                {
+                    aux.Add(e.EnrolledStudent);
+                }
+            }
+            return aux;
+        }
+
+        public List<Enrollment> ListEnrollments ()
+        {
+            List<Enrollment> aux = new List<Enrollment>();
+
+            foreach (Enrollment e in enrollments)
+            {
+                aux.Add(e);
+            }
+            return aux;
+        }
+
         public void AddCourseToPortfolio(Instructor instructor, Course course)
         {
             try

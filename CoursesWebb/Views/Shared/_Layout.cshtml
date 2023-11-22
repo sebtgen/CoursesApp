@@ -32,7 +32,16 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Course" asp-action="ListCourses">List course</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="EnrollStudent">Enroll student</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="PreEnroll">Enroll student</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Enrollment" asp-action="CheckEnrollments">List enrollments</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Instructor" asp-action="ListCoursesTeach">Instructor courses</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="ListCoursesStudents">Student courses</a>
                         </li>
                     </ul>
                 </div>

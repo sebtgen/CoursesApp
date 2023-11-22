@@ -10,7 +10,7 @@
 
     @if (ViewBag.users != null)
     {
-        <form method="post" asp-controller="User" asp-action="EnrollStudent">
+        <form method="post" asp-controller="User" asp-action="PreEnroll">
             <select class="form-select" id="user" name="userID">
                 <option>Select</option>
                 @foreach (User u in ViewBag.users)
@@ -29,10 +29,10 @@
                 @foreach (var course in allCourses)
                 {
                     <option value="@course.CourseID" /> @course.Title
-                    
+
                 }
             </select>
-            
+
             <button type="submit">Enroll</button>
         </form>
 

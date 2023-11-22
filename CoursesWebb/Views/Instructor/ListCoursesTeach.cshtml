@@ -1,0 +1,105 @@
+﻿@using Domain;
+@model List<Course>;
+
+@{
+    bool foundRegular = false;
+    bool foundOnline = false;
+}
+<div class="container">
+    <h1 class="d-flex flex-column align-items-center text-center">Instructor courses</h1>
+    @foreach (Course c in Model)
+    {
+        if (c.GetType() == typeof(RegularCourse))
+        {
+            foundRegular = true;
+        }
+        else if (c.GetType() == typeof(OnlineCourse))
+        {
+            foundOnline = true;
+        }
+    }
+
+    @{
+        if (foundRegular)
+        {
+            <h4 class="text-center">Regular courses</h4>
+            <table class="table table-striped table-bordered table-sm">
+                <thead class="bg-dark text-white">
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th>Max students</th>
+                        <th>Start date</th>
+                        <th>Location</th>
+                        <th>Meeting days</th>
+                        <th>Enrolled students</th>
+                    </tr>
+                </thead>
+
+                <tbody class="table-striped">
+                    @foreach (Course c in Model)
+                    {
+                        <tr>
+                            @if (c.GetType() == typeof(RegularCourse))
+                            {
+                                <td>@c.Title</td>
+                                <td>@c.Description</td>
+                                <td>@c.MaxStudents</td>
+                                <td>@c.StartDate.ToShortDateString()</td>
+
+                                RegularCourse rc = c as RegularCourse;
+                                <td>@rc.Location</td>
+                                <td>@rc.MeetingDays</td>
+                                <td>
+                                    @using (Html.BeginForm("CheckEnrollmentByEmail", "Enrollment", FormMethod.Post))
+                                    {
+                                        <input type="hidden" value="@rc.CourseID" name="courseID">
+                                        <button type="submit" class="btn btn-light">Check</button>
+                                    }
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    }
+
+    @{
+        if (foundOnline)
+        {
+            <h4 class="text-center">Online courses</h4>
+            <table class="table table-striped table-bordered table-sm">
+                <thead class="bg-dark text-white">
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th>Max students</th>
+                        <th>Start date</th>
+                        <th>Duration</th>
+                        <th>Platform</th>
+                    </tr>
+                </thead>
+
+                <tbody class="table-striped">
+                    @foreach (Course c in Model)
+                    {
+                        <tr>
+                            @if (c.GetType() == typeof(OnlineCourse))
+                            {
+                                <td>@c.Title</td>
+                                <td>@c.Description</td>
+                                <td>@c.MaxStudents</td>
+                                <td>@c.StartDate.ToShortDateString()</td>
+
+                                OnlineCourse oc = c as OnlineCourse;
+                                <td>@oc.DurationHours</td>
+                                <td>@oc.Platform</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    }
+</div>

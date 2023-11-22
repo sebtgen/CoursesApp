@@ -37,25 +37,33 @@ namespace CoursesWebb.Controllers
             return View(users);
         }
 
-        public IActionResult EnrollStudent()
+        public IActionResult PreEnroll()
         {
             List<User> users = unS.ListUsers();
             ViewBag.users = users;
             return View();
         }
 
-        [HttpPost]
-        public IActionResult EnrollStudent(int userID, int courseID)
+        public IActionResult ListCoursesStudents ()
         {
-            Student student = unS.FindUserByID(userID) as Student;
-            Course course = unS.FindCourseID(courseID);
+            List<Course> courses = new List<Course>();
 
-            if (student != null && course != null)
+            if (unS.ReturnCoursesStudent("test1@gmail.com").Count() > 0)
             {
-                Enrollment enrollment = new Enrollment(course, student);
-                unS.AddEnrollment(student, course, enrollment);
+                courses = unS.ReturnCoursesStudent("test1@gmail.com");
+                return View(courses);
             }
-            return View();
+            else
+            {
+                ViewBag.msg = "No courses were found";
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public IActionResult PreEnroll(int userID, int courseID)
+        {
+            return RedirectToAction("EnrollStudent", "Enrollment", new { userID, courseID });
         }
 
     }
