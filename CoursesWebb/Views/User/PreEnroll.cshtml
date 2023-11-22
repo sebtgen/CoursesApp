@@ -5,6 +5,17 @@
 
 }
 
+@if (ViewBag.success != null)
+{
+    <div class="alert-success text-center">@ViewBag.success</div>
+}
+@{
+    else if (ViewBag.error != null)
+    {
+        <div class="alert-danger text-center">@ViewBag.error</div>
+    }
+}
+
 <div class="container">
     <h1 class="d-flex flex-column align-items-center text-center">Enroll student</h1>
 
@@ -18,7 +29,7 @@
                     if (u.GetType() == typeof(Student))
                     {
                         Student s = u as Student;
-                        <option value="@s.UserID">@s.StudentName</option>
+                        <option value="@s.UserID">@s.UserID - @s.StudentName</option>
 
                     }
 
@@ -26,9 +37,10 @@
             </select>
             <br>
             <select class="form-select" id="course" name="courseID">
+                <option>Select</option>
                 @foreach (var course in allCourses)
                 {
-                    <option value="@course.CourseID" /> @course.Title
+                    <option value="@course.CourseID">@course.CourseID - @course.Title</option>
 
                 }
             </select>

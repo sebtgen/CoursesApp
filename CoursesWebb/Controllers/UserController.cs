@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Domain;
+using Microsoft.VisualBasic;
 
 namespace CoursesWebb.Controllers
 {
@@ -37,12 +38,6 @@ namespace CoursesWebb.Controllers
             return View(users);
         }
 
-        public IActionResult PreEnroll()
-        {
-            List<User> users = unS.ListUsers();
-            ViewBag.users = users;
-            return View();
-        }
 
         public IActionResult ListCoursesStudents ()
         {
@@ -58,6 +53,32 @@ namespace CoursesWebb.Controllers
                 ViewBag.msg = "No courses were found";
                 return View();
             }
+        }
+
+        public IActionResult PreEnroll(string msg, bool type)
+        {
+            if (unS.ListUsers().Count > 0)
+            {
+                List<User> users = unS.ListUsers();
+                ViewBag.users = users;
+
+                if (msg != null && !type)
+                {
+                    ViewBag.error = msg;
+                    return View(users);
+                }
+                else
+                {
+                    ViewBag.success = msg;
+                    return View(users);
+                }
+            }
+            else
+            {
+                ViewBag.msg = "No students were found";
+                return View();
+            }
+       
         }
 
         [HttpPost]

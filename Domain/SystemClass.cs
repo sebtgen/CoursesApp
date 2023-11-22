@@ -148,6 +148,7 @@ namespace Domain
         {
             try
             {
+                Enrollment.ValidateStudentAlreadyEnrolled(student, course, enrollments);
                 enrollments.Add(enrollment);
                 course.AddStudent();
             }
@@ -182,7 +183,7 @@ namespace Domain
         {
             foreach (User u in users)
             {
-                if (u.UserID == id && u.GetType() == typeof(Student))
+                if (u.UserID == id)
                 {
                     return u;
                 }
@@ -297,7 +298,7 @@ namespace Domain
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                throw ex;
             }
 
         }

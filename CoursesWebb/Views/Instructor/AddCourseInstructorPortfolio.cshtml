@@ -1,12 +1,58 @@
 ﻿@using Domain;
+@model List<User>;
 @{
     var systemClass = SystemClass.Instance;
     var allCourses = systemClass.ListCourses();
 }
 
-<h1>Enroll course to portfolio</h1>
-@foreach (var course in allCourses)
+@if (ViewBag.success != null)
 {
-    <input type="checkbox" name="selectedCourses" value="@course.CourseID"/>@course.Title
-    <br />
+    <div class="alert-success text-center">@ViewBag.success</div>
 }
+@{else if (ViewBag.error != null)
+{
+    <div class="alert-danger text-center">@ViewBag.error</div>
+}
+}
+
+        @if (Model != null)
+        {
+    <div class="container">
+        <h1 class="d-flex flex-column align-items-center text-center">Enroll course to portfolio</h1>
+
+
+            <form method="post" asp-controller="Instructor" asp-action="AddCourseInstructorPortfolio">
+                <select class="form-select" id="user" name="userID">
+                    <option>Select</option>
+                    @foreach (User u in Model)
+                    {
+                        if (u.GetType() == typeof(Instructor))
+                        {
+                            Instructor i = u as Instructor;
+                            <option value="@i.UserID">@i.UserID - @i.InstructorName</option>
+
+                        }
+
+                    }
+                </select>
+                <br>
+                <select class="form-select" id="course" name="courseID" style="display: block">
+                    <option>Select</option>
+                    @foreach (var course in allCourses)
+                    {
+                        <option value="@course.CourseID">@course.CourseID - @course.Title</option>
+
+                    }
+                </select>
+
+                <button type="submit">Add to portfolio</button>
+            </form>
+
+       
+    </div>
+}
+
+
+
+
+

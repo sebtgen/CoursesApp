@@ -11,6 +11,7 @@ namespace CoursesWebb.Controllers
 
         public IActionResult EnrollStudent(int userID, int courseID)
         {
+            try { 
             Student student = unS.FindUserByID(userID) as Student;
             Course course = unS.FindCourseID(courseID);
 
@@ -21,11 +22,17 @@ namespace CoursesWebb.Controllers
                 return View(enrollment);
             }
             else
+                {
+                    return RedirectToAction("PreEnroll", "User", new { msg = "Course or user is null", type = false });
+
+                }
+            }
+           catch (Exception ex)
             {
-                ViewBag.msg = "Student or course not found";
-                return View();
+                return RedirectToAction("PreEnroll", "User", new { msg = ex.Message, type = false });
 
             }
+
         }
 
         public IActionResult CheckEnrollments ()
@@ -53,8 +60,7 @@ namespace CoursesWebb.Controllers
             }
             else
             {
-                ViewBag.msg = "No students were found";
-                return View();
+                return RedirectToAction("ListCoursesTeach", "Instructor", new { msg = "No students were found for the course" });
 
             }
         }

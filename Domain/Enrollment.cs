@@ -28,6 +28,17 @@ namespace Domain
             lastEnrollID++;
         }
 
+        public static void ValidateStudentAlreadyEnrolled (Student student, Course course, List<Enrollment> enrollments)
+        {
+            foreach (Enrollment enrollment in enrollments)
+            {
+                if (enrollment.EnrolledStudent.Equals(student) && enrollment.EnrolledCourse.Equals(course))
+                {
+                    throw new Exception("Student has already been enrolled to the course");
+                }
+            }
+        }
+
         public override string ToString()
         {
             return $"Course name: {enrolledCourse.Title}\n" +
