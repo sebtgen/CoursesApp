@@ -72,6 +72,11 @@ namespace Domain
             coursesTeach.Add(course);
         }
 
+        public void RemoveCourse(Course course)
+        {
+            coursesTeach.Remove(course);
+        }
+
         public override string ToString()
         {
             string list = FindCID();

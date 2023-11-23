@@ -242,26 +242,19 @@ namespace Domain
             return aux;
         }
 
-        public List<Course> ReturnCoursesInstructor(string email)
+        public List<Course> ReturnCoursesInstructor(Instructor instructor)
         {
             List<Course> aux = new List<Course>();
 
            foreach (User u in users)
             {
-                if (u.GetType() == typeof(Instructor) && u.Email == email)
+                if (u.GetType() == typeof(Instructor) && u.Equals(instructor))
                 {
                     Instructor i = u as Instructor;
                     aux = i.CoursesTeach;
                 }
             }
-           if (aux.Count > 0)
-            {
-                return aux;
-            }
-           else
-            {
-                return null;
-            }
+           return aux;
         }
 
         public List<User> CheckStudentsEnrolledCourse (int id)
@@ -301,6 +294,20 @@ namespace Domain
                 throw ex;
             }
 
+        }
+
+        public void RemoveCourseFromPortfolio(Instructor instructor, List<int> list)
+        {
+            foreach (var ID in list)
+            {
+                foreach(Course course in courses)
+                {
+                    if (course.CourseID == ID)
+                    {
+                        instructor.RemoveCourse(course);
+                    }
+                }
+            }
         }
     }
 }

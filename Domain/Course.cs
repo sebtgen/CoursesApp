@@ -64,8 +64,7 @@ namespace Domain
         public Course () { }
         public Course(string title, string description, int maxStudents, DateTime startDate)
         {
-            this.courseID = lastID;
-            lastID++;
+            this.courseID = GetCurrentID();
             this.title = title;
             this.description = description;
             this.maxStudents = maxStudents;
@@ -82,6 +81,10 @@ namespace Domain
             ValidateStartDate();
         }
 
+        public virtual int GetCurrentID()
+        {
+            return lastID++;
+        }
         private void ValidateStrings()
         {
             if (string.IsNullOrEmpty(title))

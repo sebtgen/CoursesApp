@@ -17,27 +17,27 @@ namespace Domain
             {
                 case "Student":
                     user = new Student
-                    {
-                        Email = model.Email,
-                        Password = model.Password,
-                        PhoneNumber = model.PhoneNumber,
-                        StudentName = model.StudentName,
-                        DateBirth = model.DateBirth,
-                        RemoteOnly = model.RemoteOnly
-                    };
+                    (
+                        model.Email,
+                        model.Password,
+                        model.PhoneNumber,
+                        model.StudentName,
+                        model.DateBirth,
+                        model.RemoteOnly
+                    );
                     break;
                 case "Instructor":
                    
 
                     user = new Instructor
-                    {
-                        Email = model.Email,
-                        Password = model.Password,
-                        PhoneNumber = model.PhoneNumber,
-                        InstructorName = model.InstructorName,
-                        StartDate = model.StartDate,
-                        CoursesTeach = new List<Course>()
-                    };
+                    (
+                        model.Email,
+                        model.Password,
+                        model.PhoneNumber,
+                        model.InstructorName,
+                        model.StartDate,
+                        model.CoursesTeach = new List<Course>()
+                    );
 
                     Instructor instructor = (Instructor)user;
                     SystemClass unS = SystemClass.Instance;

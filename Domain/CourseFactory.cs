@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Schema;
@@ -11,6 +12,7 @@ namespace Domain
 {
     public static class CourseFactory
     {
+        
         public static Course CreateCourse(CourseViewModel model)
         {
             Course course;
@@ -18,30 +20,18 @@ namespace Domain
             switch (model.CourseType)
             {
                 case "Online":
-                    course = new OnlineCourse
-                    {
-                        Title = model.Title,
-                        Description = model.Description,
-                        MaxStudents = model.MaxStudents,
-                        DurationHours = model.DurationHours,
-                        Platform = model.Platform
-                    };
+                    course = new OnlineCourse(model.Title, model.Description, model.MaxStudents, model.StartDate, model.DurationHours, model.Platform);
                     break;
                 case "Regular":
-                    course = new RegularCourse
-                    {
-                        Title = model.Title,
-                        Description = model.Description,
-                        MaxStudents = model.MaxStudents,
-                        Location = model.Location,
-                        MeetingDays = model.MeetingDays
-                    };
+                    course = new RegularCourse(model.Title, model.Description, model.MaxStudents, model.StartDate, model.Location, model.MeetingDays);
                     break;
                 default:
-                    throw new ArgumentException("Invalid");
+                    throw new ArgumentException("Invalid course");
             }
 
             return course;
         }
     }
+
+
 }

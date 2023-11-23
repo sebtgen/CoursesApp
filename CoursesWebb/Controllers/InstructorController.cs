@@ -10,9 +10,10 @@ namespace CoursesWebb.Controllers
         {
             List<Course> courses = new List<Course>();
             //change to search logged instructor
-            if (unS.ReturnCoursesInstructor("test4@gmail.com").Count()>0)
+            Instructor instructor = unS.FindUserByEmail("test4@gmail.com", false) as Instructor;
+            if (unS.ReturnCoursesInstructor(instructor).Count()>0)
             {
-                courses = unS.ReturnCoursesInstructor("test4@gmail.com");
+                courses = unS.ReturnCoursesInstructor(instructor);
 
                 if (msg != null)
                 {
@@ -77,6 +78,76 @@ namespace CoursesWebb.Controllers
             {
                 return RedirectToAction("AddCourseInstructorPortfolio", "Instructor", new { msg = ex.Message , type = false});
             }
+        }
+
+        public IActionResult RemoveCourseInstructorPortfolio (string msg, bool type)
+        {
+            if (unS.ListUsers().Count > 0)
+            {
+                List<User> users = unS.ListUsers();
+                ViewBag.users = users;
+
+                if (msg != null && !type)
+                {
+                    ViewBag.error = msg;
+                    return View(users);
+                }
+                else
+                {
+                    ViewBag.success = msg;
+                    return View(users);
+                }
+            }
+            else
+            {
+                ViewBag.msg = "No instructors were found";
+                return View();
+            }
+        }
+
+        [HttpPost]
+
+        public IActionResult RemoveCourseInstructorPortfolio (int userID)
+        {
+            if (userID != null) 
+            {
+                TempData["instructorID"] = userID;
+                Instructor instructor = unS.FindUserByID(userID) as Instructor;
+
+                if (instructor != null)
+                {
+                    List<Course> courses = unS.ReturnCoursesInstructor(instructor);
+                    if (courses.Count > 0)
+                    {
+                        ViewBag.courses = courses;
+                        return View();
+                    }
+                    else
+                    {
+                        return RedirectToAction("RemoveCourseInstructorPortfolio", "Instructor", new { msg = "No courses were found", type = false });
+
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("RemoveCourseInstructorPortfolio", "Instructor", new { msg = "Invalid instructor", type = false });
+
+                }
+
+            }
+            else
+            {
+                return RedirectToAction("RemoveCourseInstructorPortfolio", "Instructor", new { msg = "Invalid user ID", type = false });
+
+            }
+        }
+
+        [HttpPost]
+        public IActionResult RemoveCourse (List<int> selectedCourses, int instructorID)
+        {
+            Instructor instructor = unS.FindUserByID(instructorID) as Instructor;
+            unS.RemoveCourseFromPortfolio(instructor, selectedCourses);
+            return View();
         }
     }
 }

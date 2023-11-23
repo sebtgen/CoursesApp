@@ -22,6 +22,7 @@ namespace Domain
             this.platform = platform;
         }
 
+
         public override string ToString()
         {
             return base.ToString() + $"Duration hours: {DurationHours}\n" + $"Platform: {Platform}\n";

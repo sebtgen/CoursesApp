@@ -18,13 +18,12 @@ namespace CoursesWebb.Controllers
             try
             {
                 Course course = CourseFactory.CreateCourse(model);
-
                 unS.AddCourse(course);
                 return View();
             }
             catch (Exception ex)
             {
-                ViewBag.Mensaje = $"Test";
+                ViewBag.Mensaje = ex.Message;
                 return View();
 
             }
