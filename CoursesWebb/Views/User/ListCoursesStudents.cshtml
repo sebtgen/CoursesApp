@@ -28,7 +28,6 @@
                     <tr>
                         <th scope="col">Title</th>
                         <th scope="col">Description</th>
-                        <th>Max students</th>
                         <th>Start date</th>
                         <th>Location</th>
                         <th>Meeting days</th>
@@ -43,7 +42,6 @@
                             {
                                 <td>@c.Title</td>
                                 <td>@c.Description</td>
-                                <td>@c.MaxStudents</td>
                                 <td>@c.StartDate.ToShortDateString()</td>
 
                                 RegularCourse rc = c as RegularCourse;

@@ -12,7 +12,7 @@ namespace Domain
         List<Course> courses = new List<Course>();
         List<User> users = new List<User>();
         List<Enrollment> enrollments = new List<Enrollment>();
-
+        List<Operator> operators = new List<Operator>();
         public static SystemClass Instance
         {
             get
@@ -27,12 +27,12 @@ namespace Domain
 
         private SystemClass()
         {
-            AddCourse(new RegularCourse("Test 1", "Description 1", 1, DateTime.Now, "Place 1", "M-F"));
-            AddCourse(new RegularCourse("Test 2", "Description 2", 2, DateTime.Now, "Place 2", "M-F"));
-            AddCourse(new RegularCourse("Test 3", "Description 3", 3, DateTime.Now, "Place 3", "M-F"));
-            AddCourse(new OnlineCourse("Test 4", "Description 4", 3, DateTime.Now, 20, OnlineCourse.onlinePlatform.GOOGLE));
-            AddCourse(new OnlineCourse("Test 5", "Description 5", 3, DateTime.Now, 40, OnlineCourse.onlinePlatform.WEBEX));
-            AddCourse(new OnlineCourse("Test 6", "Description 6", 3, DateTime.Now, 60, OnlineCourse.onlinePlatform.ZOOM));
+            AddCourse(new RegularCourse("Test 1", "Description 1", 1, new DateTime(2025, 09, 25), "Place 1", "M-F"));
+            AddCourse(new RegularCourse("Test 2", "Description 2", 2, new DateTime(2024, 05, 21), "Place 2", "M-F"));
+            AddCourse(new RegularCourse("Test 3", "Description 3", 3, new DateTime(2024, 02, 11), "Place 3", "M-F"));
+            AddCourse(new OnlineCourse("Test 4", "Description 4", 3, new DateTime(2025, 02, 04), 20, OnlineCourse.onlinePlatform.GOOGLE));
+            AddCourse(new OnlineCourse("Test 5", "Description 5", 3, new DateTime(2024, 11, 19), 40, OnlineCourse.onlinePlatform.WEBEX));
+            AddCourse(new OnlineCourse("Test 6", "Description 6", 3, new DateTime(2024, 02, 01), 60, OnlineCourse.onlinePlatform.ZOOM));
 
             List<Course> courseList1 = new List<Course>
             {
@@ -55,12 +55,15 @@ namespace Domain
                 courses[5]
             };
 
-            AddUser(new Student("test1@gmail.com", "PassTest1", "1234567890", "Tito 1", DateTime.Now/*, courseList1*/, true));
-            AddUser(new Student("test2@gmail.com", "PassTest2", "1234567890", "Tito 2", DateTime.Now/*, courseList2*/, false));
-            AddUser(new Student("test3@gmail.com", "PassTest3", "1234567890", "Tito 3", DateTime.Now/*, courseList3*/, true));
+            AddUser(new Student("test1@gmail.com", "PassTest1", "1234567890", "Tito 1", new DateTime(1900, 03, 12)/*, courseList1*/, true));
+            AddUser(new Student("test2@gmail.com", "PassTest2", "1234567890", "Tito 2", new DateTime(1901, 05, 27)/*, courseList2*/, false));
+            AddUser(new Student("test3@gmail.com", "PassTest3", "1234567890", "Tito 3", new DateTime(1902, 07, 29)/*, courseList3*/, true));
 
             AddUser(new Instructor("test4@gmail.com", "PassTest1", "1234567890", "Tito 1", DateTime.Now/*, courseList1*/, courseList1));
 
+            AddUser(new Instructor("test5@gmail.com", "PassTest1", "1234567890", "Tito 1", DateTime.Now/*, courseList1*/, courseList3));
+
+            AddUser(new Operator("operator@gmail.com", "operator", "1234567890", "Tito 1"));
 
             AddEnrollment((Student)users[0], courses[0], new Enrollment(courses[0], (Student)users[0]));
             AddEnrollment((Student)users[0], courses[1], new Enrollment(courses[1], (Student)users[0]));
@@ -74,6 +77,18 @@ namespace Domain
         {
             Regular,
             Online
+        }
+
+        public void ValidateUserAlreadyAdded (User user)
+        {
+            foreach (User u in users)
+            {
+                if (u.Email.Equals(user.Email.Trim()))
+                {
+                    throw new Exception("User has already been registered");
+                }
+            }
+           
         }
 
         public void AddCourse(Course course)
@@ -91,6 +106,8 @@ namespace Domain
 
         public void AddUser(User user)
         {
+            ValidateUserAlreadyAdded(user);
+
             if (user.GetType() == typeof(Instructor))
             {
                 Instructor instructor = user as Instructor;
@@ -119,7 +136,10 @@ namespace Domain
                     throw e;
                 }
             }
-
+            else if (user.GetType() == typeof(Operator))
+            {
+                users.Add(user);
+            }
         }
 
         public List<Course> ListCourses()
@@ -184,6 +204,18 @@ namespace Domain
             foreach (User u in users)
             {
                 if (u.UserID == id)
+                {
+                    return u;
+                }
+            }
+            return null;
+        }
+
+        public User FindUserByEmailPass(string email, string password)
+        {
+            foreach (User u in users)
+            {
+                if (u.Email == email.ToLower() && u.Password == password)
                 {
                     return u;
                 }

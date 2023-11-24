@@ -19,7 +19,7 @@
 {
     <div class="container">
         <h1 class="d-flex flex-column align-items-center text-center">Enroll course to portfolio</h1>
-
+        <hr>
 
             <form method="post" asp-controller="Instructor" asp-action="AddCourseInstructorPortfolio">
                 <select class="form-select" id="user" name="userID">
@@ -45,7 +45,9 @@
                     }
                 </select>
 
-                <button type="submit">Add to portfolio</button>
+            <div class="text-center">
+                <button type="submit" class="btn btn-light">Add to portfolio</button>
+            </div>
             </form>
 
        

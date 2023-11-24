@@ -39,16 +39,16 @@ namespace Domain
                         model.CoursesTeach = new List<Course>()
                     );
 
-                    Instructor instructor = (Instructor)user;
-                    SystemClass unS = SystemClass.Instance;
-                    foreach (var courseID in model.SelectedCourses)
-                    {
-                        Course course = unS.FindCourseID(courseID);
-                        if (course != null)
-                        {
-                            instructor.CoursesTeach.Add(course);
-                        }
-                    }
+                    //Instructor instructor = (Instructor)user;
+                    //SystemClass systemInstance = SystemClass.Instance;
+                    //foreach (var courseID in model.SelectedCourses)
+                    //{
+                    //    Course course = systemInstance.FindCourseID(courseID);
+                    //    if (course != null)
+                    //    {
+                    //        instructor.CoursesTeach.Add(course);
+                    //    }
+                    //}
                     break;
                 default:
                     throw new ArgumentException("Invalid");

@@ -5,11 +5,20 @@ namespace CoursesWebb.Controllers
 
     public class CourseController : Controller
     {
-        SystemClass unS = SystemClass.Instance;
+        SystemClass systemInstance = SystemClass.Instance;
 
-        public IActionResult CreateCourse ()
+        public IActionResult CreateCourse (string msg, bool type)
         {
-        return View();
+            if (!type)
+            {
+                ViewBag.error = msg;
+                return View();
+            }
+            else
+            {
+                ViewBag.success = msg;
+                return View();
+            }
         }        
 
         [HttpPost]
@@ -18,20 +27,19 @@ namespace CoursesWebb.Controllers
             try
             {
                 Course course = CourseFactory.CreateCourse(model);
-                unS.AddCourse(course);
-                return View();
+                systemInstance.AddCourse(course);
+                return RedirectToAction("CreateCourse", "Course", new { msg = "Course has been successfully created", type = true });
             }
             catch (Exception ex)
             {
-                ViewBag.Mensaje = ex.Message;
-                return View();
+                return RedirectToAction("CreateCourse", "Course", new { msg = ex.Message, type = false });
 
             }
         }
 
         public IActionResult ListCourses ()
         {
-            List<Course> courses = unS.ListCourses();
+            List<Course> courses = systemInstance.ListCourses();
             ViewBag.courses = courses;
             return View(courses);
         }

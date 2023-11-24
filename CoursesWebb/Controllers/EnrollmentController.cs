@@ -7,18 +7,18 @@ namespace CoursesWebb.Controllers
 {
     public class EnrollmentController : Controller
     {
-        SystemClass unS = SystemClass.Instance;
+        SystemClass systemInstance = SystemClass.Instance;
 
         public IActionResult EnrollStudent(int userID, int courseID)
         {
             try { 
-            Student student = unS.FindUserByID(userID) as Student;
-            Course course = unS.FindCourseID(courseID);
+            Student student = systemInstance.FindUserByID(userID) as Student;
+            Course course = systemInstance.FindCourseID(courseID);
 
             if (student != null && course != null)
             {
                 Enrollment enrollment = new Enrollment(course, student);
-                unS.AddEnrollment(student, course, enrollment);
+                systemInstance.AddEnrollment(student, course, enrollment);
                 return View(enrollment);
             }
             else
@@ -37,9 +37,9 @@ namespace CoursesWebb.Controllers
 
         public IActionResult CheckEnrollments ()
         {
-            if (unS.ListEnrollments().Count > 0)
+            if (systemInstance.ListEnrollments().Count > 0)
             {
-                List<Enrollment> enrollments = unS.ListEnrollments();
+                List<Enrollment> enrollments = systemInstance.ListEnrollments();
                 return View(enrollments);
             }
             else
@@ -53,9 +53,9 @@ namespace CoursesWebb.Controllers
         public IActionResult CheckEnrollmentByEmail (int courseID)
         {
             List<User> users = new List<User>();
-            if (unS.CheckStudentsEnrolledCourse(courseID).Count > 0)
+            if (systemInstance.CheckStudentsEnrolledCourse(courseID).Count > 0)
             {
-                users = unS.CheckStudentsEnrolledCourse(courseID);
+                users = systemInstance.CheckStudentsEnrolledCourse(courseID);
                 return View(users);
             }
             else

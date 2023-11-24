@@ -6,11 +6,20 @@ namespace CoursesWebb.Controllers
 {
     public class UserController : Controller
     {
-        SystemClass unS = SystemClass.Instance;
+        SystemClass systemInstance = SystemClass.Instance;
 
-        public IActionResult CreateUser()
+        public IActionResult CreateUser(string msg, bool type)
         {
-            return View();
+            if (!type)
+            {
+                ViewBag.error = msg;
+                return View();
+            }
+            else
+            {
+                ViewBag.success = msg;
+                return View();
+            }
         }
 
         [HttpPost]
@@ -19,21 +28,18 @@ namespace CoursesWebb.Controllers
             try
             {
                 User user = UserFactory.CreateUser(model);
-                unS.AddUser(user);
-                List<User> users = unS.ListUsers();
-                ViewBag.users = users;
-                return View(users);
+                systemInstance.AddUser(user);
+                return RedirectToAction("Index", "Home", new { msg = "User has been successfully created", type = true });
             }
             catch (Exception ex)
             {
-                ViewBag.Mensaje = $"Test";
-                return RedirectToAction("CreateUser");
+                return RedirectToAction("CreateUser", "User", new { msg = ex.Message, type = false });
             }
         }
 
         public IActionResult ListUsers ()
         {
-            List<User> users = unS.ListUsers();
+            List<User> users = systemInstance.ListUsers();
             ViewBag.users = users;
             return View(users);
         }
@@ -43,9 +49,9 @@ namespace CoursesWebb.Controllers
         {
             List<Course> courses = new List<Course>();
 
-            if (unS.ReturnCoursesStudent("test1@gmail.com").Count() > 0)
+            if (systemInstance.ReturnCoursesStudent("test1@gmail.com").Count() > 0)
             {
-                courses = unS.ReturnCoursesStudent("test1@gmail.com");
+                courses = systemInstance.ReturnCoursesStudent("test1@gmail.com");
                 return View(courses);
             }
             else
@@ -57,9 +63,9 @@ namespace CoursesWebb.Controllers
 
         public IActionResult PreEnroll(string msg, bool type)
         {
-            if (unS.ListUsers().Count > 0)
+            if (systemInstance.ListUsers().Count > 0)
             {
-                List<User> users = unS.ListUsers();
+                List<User> users = systemInstance.ListUsers();
                 ViewBag.users = users;
 
                 if (msg != null && !type)

@@ -5,6 +5,9 @@
     bool foundRegular = false;
     bool foundOnline = false;
 }
+<h1 class="text-center">Created courses</h1>
+
+<hr />
 <div class="container">
 @foreach (Course c in Model)
 {
@@ -89,4 +92,7 @@
             </tbody>
         </table>
     }}
+</div>
+<div class="d-flex justify-content-center">
+    <a href="/Home/Index" class="btn btn-light">Back to home page</a>
 </div>

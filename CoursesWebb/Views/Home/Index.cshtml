@@ -1,5 +1,21 @@
 ﻿@using Domain;
 
-<h1 class="text-center">Home page</h1>
-<hr/>
+<div class="container mt-4">
+    @if (ViewBag.success != null)
+    {
+        <div class="alert alert-success text-center" role="alert">
+            @ViewBag.success
+        </div>
+    }
+    else if (ViewBag.error != null)
+    {
+        <div class="alert alert-danger text-center" role="alert">
+            @ViewBag.error
+        </div>
+    }
 
+    <div class="text-center">
+        <h1 class="display-4">Welcome to the Home Page</h1>
+        <hr class="my-4">
+    </div>
+</div>

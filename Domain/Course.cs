@@ -113,7 +113,7 @@ namespace Domain
 
         private void ValidateStartDate()
         {
-            if (StartDate.Year > DateTime.Now.Year)
+            if (StartDate < DateTime.Now)
             {
                 throw new Exception("Start date cant be in the future");
             }

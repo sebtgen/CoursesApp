@@ -5,6 +5,16 @@
 }
 @model List<User>;
 
+@if (ViewBag.success != null)
+{
+    <div class="alert-success text-center">@ViewBag.success</div>
+}
+@{
+    else if (ViewBag.error != null)
+    {
+        <div class="alert-danger text-center">@ViewBag.error</div>
+    }
+}
 <div class="container">
     <h1 class="d-flex flex-column align-items-center text-center">Create user</h1>
 
@@ -40,7 +50,11 @@
             </div>
             <div class="mb-3">
                 <label for="Uremote" class="form-label">Remote only:</label>
-                <input type="text" class="form-control" id="Uremote" name="remoteOnly">
+                 <select class="form-select" id="Uremote" name="remoteOnly">
+                    <option>Select</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
             </div>
         </div>
 
@@ -53,7 +67,7 @@
                 <label for="UstartDate" class="form-label">Start date:</label>
                 <input type="date" class="form-control" id="UstartDate" name="startDate">
             </div>
-            <div class="mb-3">
+@*             <div class="mb-3">
                 <label for="Ucourses" class="form-label">Courses teach:</label>
             </div>
 
@@ -61,11 +75,13 @@
             {
                 <input type="checkbox" name="selectedCourses" value="@course.CourseID" /> @course.Title
                 <br />
-            }
+            } *@
         </div>
         <input type="hidden" id="userType" name="userType">
 
-        <button type="submit">Submit</button>
+        <div class="text-center">
+            <button type="submit" class="btn btn-light">Submit</button>
+        </div>
 
     </form>
 

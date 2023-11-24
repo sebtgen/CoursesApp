@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoursesApp", "CoursesApp\Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{F5F9BFAD-AD74-4905-86B5-AA66F7FDEA4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoursesWebb", "CoursesWebb\CoursesWebb.csproj", "{0A777395-2FF1-4000-B0FD-AF09A058C49D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoursesWebb", "CoursesWebb\CoursesWebb.csproj", "{0A777395-2FF1-4000-B0FD-AF09A058C49D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
